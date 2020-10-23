@@ -1,6 +1,7 @@
 package com.yangjin.leetCode;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,24 +38,31 @@ import java.util.Map;
  */
 public class A_146 {
     public static void main(String[] args) {
-        int capacity = 10;
-        int key = 1;
-        int value = 1;
+        int capacity = 2;
         A_146 obj = new A_146(capacity);
-        int param_1 = obj.get(key);
-        obj.put(key,value);
+
+        obj.put(2,1);
+        obj.put(2,2);
+        System.out.println(obj.get(2));
+//        obj.put(3,3);
+//        System.out.println(obj.get(2));
     }
 
     private Map<Integer, ListNode> map;
     private ListNode head;
+    private ListNode tail;
+    private int capacity;
 
     public A_146(int capacity) {
-        map = new HashMap<>(capacity);
+        this.capacity = capacity;
+        this.map = new HashMap<>(capacity+1);
     }
 
     public int get(int key) {
         ListNode listNode = map.get(key);
+//        System.out.println(listNode);
         if (listNode != null) {
+            if (this.head != listNode) up(listNode);
             return listNode.val;
         }
         return -1;
@@ -63,33 +71,57 @@ public class A_146 {
     public void put(int key, int value) {
         ListNode node = map.get(key);
         if (node==null) {
-            ListNode listNode = new ListNode(value);
+            ListNode listNode = new ListNode(key, value);
             if (this.head != null) {
                 listNode.next = this.head;
                 this.head.pre = listNode;
             }
             map.put(key, listNode);
             this.head = listNode;
-        } else if(this.head != node) {
-            ListNode pre = node.pre;
-            ListNode next = node.next;
-            pre.next = next;
-            if (next!=null) {
-                next.pre = pre;
+            if (this.tail==null) {
+                this.tail = listNode;
+            } else if (map.size()>capacity){
+                map.remove(this.tail.key);
+                ListNode pre = this.tail.pre;
+                pre.next = null;
+                this.tail = pre;
             }
-            node.pre = null;
-            node.next = this.head;
-            this.head = node;
+        } else {
+            node.val = value;
+            if(this.head != node) {
+                up(node);
+            }
         }
+    }
+
+    private void up(ListNode node) {
+        ListNode pre = node.pre;
+        ListNode next = node.next;
+        pre.next = next;
+        if (next!=null) {
+            next.pre = pre;
+        } else {
+            this.tail = pre;
+        }
+        node.pre = null;
+        node.next = this.head;
+        this.head.pre = node;
+        this.head = node;
     }
 }
 
 class ListNode {
+    int key;
     int val;
     ListNode pre;
     ListNode next;
-    ListNode() {}
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-    ListNode(int val, ListNode next, ListNode pre) { this.val = val; this.next = next; this.pre = pre; }
+    ListNode(int key,int val) { this.key = key; this.val = val; }
+
+    void next(ListNode next) {
+        this.next = next;
+    }
+
+    void pre(ListNode pre) {
+        this.pre = pre;
+    }
 }
