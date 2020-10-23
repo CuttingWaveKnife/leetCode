@@ -23,51 +23,40 @@ import java.util.Arrays;
 public class A_53 {
     public static void main(String[] args) {
         A_53 a53 = new A_53();
-        System.out.println(a53.maxSubArray(new int[]{8,-19,5,-4,20}));
+        System.out.println(a53.maxSubArray(new int[]{-2,1}));
     }
 
     public int maxSubArray(int[] nums) {
-        return get(nums);
+        return get(nums, 0, nums.length);
     }
 
-    private int get(int[] nums) {
-        for (int num : nums) {
-            System.out.print(num+",");
-        }
-        System.out.println();
-        int len = nums.length;
+    private int get(int[] nums, int start, int end) {
+        int len = end - start;
         if (len == 1) {
-            return nums[0];
+            return nums[start];
         }
-        int center = (len - 1) / 2;
-        System.out.println("========================="+center);
-        int[] a = Arrays.copyOfRange(nums, 0, center+1);
-        int left = get(a);
-        int[] b = Arrays.copyOfRange(nums, center+1, len);
-        int right = get(b);
+        int center = (start + end-1) / 2;
+        System.out.println(start+":"+end+"="+len+";   "+center);
+        int left = get(nums, start, center+1);
+        int right = get(nums, center+1, end);
         int max = Math.max(left, right);
         int mix = nums[center] + nums[center + 1];
         if (len>2) {
             int lmax = mix;
             int l = lmax;
-            for (int i = center - 1; i >= 0; i--) {
+            for (int i = center - 1; i >= start; i--) {
                 l = l + nums[i];
                 lmax = Math.max(l, lmax);
             }
             int rmax = mix;
             int r = rmax;
-            for (int i = center + 2; i < len; i++) {
+            for (int i = center + 2; i < end; i++) {
                 r = r + nums[i];
                 rmax = Math.max(r, rmax);
             }
-            lmax = Math.max(lmax, mix);
-            rmax = Math.max(rmax, mix);
-            if (lmax == mix || rmax == mix) {
-                mix = 0;
-            }
             mix = lmax + rmax - mix;
         }
-        System.out.println(mix+"-----------"+max);
+        System.out.println(max+":"+mix);
         max = Math.max(max, mix);
         return max;
     }
