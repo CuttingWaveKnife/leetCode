@@ -48,9 +48,9 @@ public class A_146 {
 //        System.out.println(obj.get(2));
     }
 
-    private Map<Integer, ListNode> map;
-    private ListNode head;
-    private ListNode tail;
+    private Map<Integer, DoubleListNode> map;
+    private DoubleListNode head;
+    private DoubleListNode tail;
     private int capacity;
 
     public A_146(int capacity) {
@@ -59,7 +59,7 @@ public class A_146 {
     }
 
     public int get(int key) {
-        ListNode listNode = map.get(key);
+        DoubleListNode listNode = map.get(key);
 //        System.out.println(listNode);
         if (listNode != null) {
             if (this.head != listNode) up(listNode);
@@ -69,9 +69,9 @@ public class A_146 {
     }
 
     public void put(int key, int value) {
-        ListNode node = map.get(key);
+        DoubleListNode node = map.get(key);
         if (node==null) {
-            ListNode listNode = new ListNode(key, value);
+            DoubleListNode listNode = new DoubleListNode(key, value);
             if (this.head != null) {
                 listNode.next = this.head;
                 this.head.pre = listNode;
@@ -82,7 +82,7 @@ public class A_146 {
                 this.tail = listNode;
             } else if (map.size()>capacity){
                 map.remove(this.tail.key);
-                ListNode pre = this.tail.pre;
+                DoubleListNode pre = this.tail.pre;
                 pre.next = null;
                 this.tail = pre;
             }
@@ -94,9 +94,9 @@ public class A_146 {
         }
     }
 
-    private void up(ListNode node) {
-        ListNode pre = node.pre;
-        ListNode next = node.next;
+    private void up(DoubleListNode node) {
+        DoubleListNode pre = node.pre;
+        DoubleListNode next = node.next;
         pre.next = next;
         if (next!=null) {
             next.pre = pre;
@@ -110,18 +110,3 @@ public class A_146 {
     }
 }
 
-class ListNode {
-    int key;
-    int val;
-    ListNode pre;
-    ListNode next;
-    ListNode(int key,int val) { this.key = key; this.val = val; }
-
-    void next(ListNode next) {
-        this.next = next;
-    }
-
-    void pre(ListNode pre) {
-        this.pre = pre;
-    }
-}
