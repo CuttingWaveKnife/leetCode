@@ -21,9 +21,9 @@ import com.yangjin.leetCode.ListNode;
  * 链接：https://leetcode-cn.com/problems/add-two-numbers
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class A_2 {
+public class B_2 {
     public static void main(String[] args) {
-        A_2 a2 = new A_2();
+        B_2 a2 = new B_2();
         ListNode node1 = new ListNode(2);
         ListNode node2 = new ListNode(4);
         ListNode node3 = new ListNode(3);

@@ -32,9 +32,9 @@ import java.util.Set;
  * 0 <= s.length <= 5 * 104
  * s 由英文字母、数字、符号和空格组成
  */
-public class A_3 {
+public class B_3 {
     public static void main(String[] args) {
-        A_3 a3 = new A_3();
+        B_3 a3 = new B_3();
         String str = "ggububgvfk";
         System.out.println(a3.lengthOfLongestSubstring(str));
     }
