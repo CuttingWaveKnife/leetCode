@@ -1,4 +1,4 @@
-package com.yangjin.leetCode;
+package com.yangjin.leetCode.top100;
 
 /**
  * 5. 最长回文子串
@@ -24,6 +24,7 @@ public class B_5 {
 
     public String longestPalindrome(String s) {
         char[] chars = s.toCharArray();
+
         return null;
     }
 }
